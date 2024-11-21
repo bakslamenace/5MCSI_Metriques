@@ -26,8 +26,7 @@ def meteo():
         temp_day_value = list_element.get('main', {}).get('temp') - 273.15 # Conversion de Kelvin en °c 
         results.append({'Jour': dt_value, 'temp': temp_day_value})
     return jsonify(results=results)
-  except Exception as e:
-        return jsonify({'error': str(e)})
+  
 
 @app.route('/histogramme/')
 def meteo2():
@@ -48,6 +47,8 @@ def meteo2():
         
         # Retourne les données en format JSON pour le graphique
         return jsonify(results=results)
+      except Exception as e:
+        return jsonify({'error': str(e)})
 
 @app.route("/rapport/")
 def mongraphique():
