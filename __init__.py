@@ -36,6 +36,33 @@ def mongraphique():
 def mongraphique2():
     return render_template("graphique2.html")
 
+@app.route('/commits-data/')
+def commits_data():
+    try:
+        # Appel à l'API GitHub pour récupérer les commits
+        url = 'https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits'
+        response = requests.get(url)
+        response.raise_for_status()  # Vérifier les erreurs HTTP
+        
+        commits = response.json()
+        
+        # Extraire les minutes des dates de commits
+        minutes_list = [
+            datetime.strptime(commit['commit']['author']['date'], '%Y-%m-%dT%H:%M:%SZ').minute
+            for commit in commits
+        ]
+        
+        # Compter le nombre de commits par minute
+        minutes_count = Counter(minutes_list)
+        
+        # Transformer en format JSON pour le graphique
+        data = [{'minute': minute, 'count': count} for minute, count in sorted(minutes_count.items())]
+        return jsonify(data=data)
+
+@app.route('/commits/')
+def commits():
+    return render_template('commits.html')
+
 
 
 if __name__ == "__main__":
