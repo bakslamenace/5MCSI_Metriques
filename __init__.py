@@ -40,7 +40,7 @@ def mongraphique2():
 def commits_data():
     try:
         # URL de l'API GitHub pour récupérer les commits
-        url = 'https://github.com/mamacito93/5MCSI_Metriques/commits'
+        url = 'https://api.github.com/repos/mamacito93/5MCSI_Metriques/commits'
         response = requests.get(url)
         response.raise_for_status()  # Vérification des erreurs HTTP
         
@@ -62,7 +62,7 @@ def commits_data():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-# Route pour afficher le graphique des commits
+
 @app.route("/commits/")
 def commits():
     return render_template("commits.html")
