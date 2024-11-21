@@ -17,10 +17,5 @@ def MaPremiereAPI():
     return render_template("forms.html")
 
 
-@app.route("/rapport/")
-def mongraphique():
-    return render_template("graphique.html")
-
-
 if __name__ == "__main__":
     app.run(debug=True)
