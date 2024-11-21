@@ -34,8 +34,8 @@
           chart.draw(dataTable, options);
         }
 
-        // Récupérer les données depuis notre API /histogramme/
-        fetch('/histogramme/')
+        // Récupérer les données depuis notre API /tawarano/
+        fetch('/tawarano/')
           .then(response => response.json())
           .then(data => {
             drawChart(data);
