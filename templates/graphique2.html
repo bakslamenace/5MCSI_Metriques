@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Metrique</title>
+    <title>Histogramme des Températures</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
   <body>
@@ -15,25 +15,27 @@
           // Convertir les données récupérées en un tableau utilisable par Google Charts
           var dataTable = new google.visualization.DataTable();
           dataTable.addColumn('string', 'Date');
-          dataTable.addColumn('number', 'Valeur');
+          dataTable.addColumn('number', 'Température (°C)');
           data.results.forEach(entry => {
             var date = new Date(entry.Jour * 1000);
             dataTable.addRow([date.toLocaleDateString(), entry.temp]);
           });
 
-          // Configurer les options du graphique en histogramme
+          // Configurer les options pour un histogramme
           var options = {
-            title: 'Évolution des températures de la ville de Tawarano',
-            legend: { position: 'bottom' }
+            title: 'Histogramme des températures de la ville de Tawarano',
+            legend: { position: 'bottom' },
+            hAxis: { title: 'Date' },
+            vAxis: { title: 'Température (°C)' },
           };
 
-          // Créer un histogramme au lieu d'un graphique en ligne
+          // Créer un histogramme
           var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
           chart.draw(dataTable, options);
         }
 
-        // Récupération de données depuis notre API /tawarano/
-        fetch('/tawarano/')
+        // Récupérer les données depuis notre API /histogramme/
+        fetch('/histogramme/')
           .then(response => response.json())
           .then(data => {
             drawChart(data);
