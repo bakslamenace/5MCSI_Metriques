@@ -29,15 +29,23 @@ def meteo():
 
 @app.route('/histogramme/')
 def meteo2():
-    response = urlopen('https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx')
-    raw_content = response.read()
-    json_content = json.loads(raw_content.decode('utf-8'))
-    results = []
-    for list_element in json_content.get('list', []):
-        dt_value = list_element.get('dt')
-        temp_day_value = list_element.get('main', {}).get('temp') - 273.15 # Conversion de Kelvin en °c 
-        results.append({'Jour': dt_value, 'temp': temp_day_value})
-    return jsonify(results=results)
+    # Récupération des données depuis l'API OpenWeatherMap
+    try:
+        response = urlopen('https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx')
+        raw_content = response.read()
+        json_content = json.loads(raw_content.decode('utf-8'))
+        
+        # Initialisation des résultats
+        results = []
+        
+        # Traitement des données reçues
+        for list_element in json_content.get('list', []):
+            dt_value = list_element.get('dt')  # Timestamp de la date
+            temp_day_value = list_element.get('main', {}).get('temp') - 273.15  # Conversion de Kelvin en °C
+            results.append({'Jour': dt_value, 'temp': round(temp_day_value, 2)})  # Arrondi à 2 décimales
+        
+        # Retourne les données en format JSON pour le graphique
+        return jsonify(results=results)
 
 @app.route("/rapport/")
 def mongraphique():
