@@ -35,37 +35,6 @@ def mongraphique():
 def mongraphique2():
     return render_template("graphique2.html")
 
-# Route pour fournir les données des commits
-@app.route('/commits-data/')
-def commits_data():
-    try:
-        # URL de l'API GitHub pour récupérer les commits
-        url = 'https://api.github.com/repos/mamacito93/5MCSI_Metriques/commits'
-        response = requests.get(url)
-        response.raise_for_status()  # Vérification des erreurs HTTP
-        
-        commits = response.json()
-        
-        # Extraire les minutes des dates de commits
-        minutes_list = [
-            datetime.strptime(commit['commit']['author']['date'], '%Y-%m-%dT%H:%M:%SZ').minute
-            for commit in commits
-        ]
-        
-        # Compter le nombre de commits par minute
-        minutes_count = Counter(minutes_list)
-        
-        # Transformer en format JSON pour le graphique
-        data = [{'minute': minute, 'count': count} for minute, count in sorted(minutes_count.items())]
-        return jsonify(data=data)
-    
-    except Exception as e:
-        return jsonify({'error': str(e)})
-
-
-@app.route("/commits/")
-def commits():
-    return render_template("commits.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
