@@ -9,7 +9,7 @@ app = Flask(name)
 
 @app.route('/')
 def hello_world():
-    return render_template('hello.html') #Comm
+    return render_template('hello.html') #comm2
 
 @app.route("/contact/")
 def MaPremiereAPI():
@@ -27,9 +27,9 @@ def meteo():
         results.append({'Jour': dt_value, 'temp': temp_day_value})
     return jsonify(results=results)
 
-if __name == "__main":
-  app.run(debug=True)
-
 @app.route("/rapport/")
 def mongraphique():
     return render_template("graphique.html")
+
+if __name == "__main":
+  app.run(debug=True)
