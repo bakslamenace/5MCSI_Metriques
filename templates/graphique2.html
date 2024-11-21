@@ -33,7 +33,7 @@
         }
 
         // Récupération de données depuis notre API /tawarano/
-        fetch('/tawarano/')
+        fetch('/histogramme/')
           .then(response => response.json())
           .then(data => {
             drawChart(data);
