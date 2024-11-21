@@ -53,9 +53,9 @@ def commits_data():
         data = [{'minute': minute, 'count': count} for minute, count in sorted(minutes_count.items())]
         return jsonify(data=data)
 
-@app.route('/commits/')
+@app.route("/commits/")
 def commits():
-    return render_template('commits.html')
+    return render_template("commits.html")
 
 if __name__ == "__main__":
   app.run(debug=True)
